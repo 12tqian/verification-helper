@@ -156,7 +156,9 @@ def push_documents_to_gh_pages(*, src_dir: pathlib.Path, dst_branch: str = 'gh-p
 
 
 def subcommand_docs(*, jobs: int = 1) -> None:
+    logger.info('did i ever een make it here :(')
     if 'GITHUB_ACTION' in os.environ and 'GITHUB_TOKEN' in os.environ:
+        logger.info('i did, i did make it!')
         if os.environ['GITHUB_REF'] == 'refs/heads/master':
             logger.info('generate documents...')
             onlinejudge_verify.documentation.main.main(jobs=jobs)
@@ -165,6 +167,7 @@ def subcommand_docs(*, jobs: int = 1) -> None:
             push_documents_to_gh_pages(src_dir=pathlib.Path('.verify-helper/markdown'))
 
     else:
+        logger.info('uhhhhhhhh')
         logger.info('generate documents...')
         onlinejudge_verify.documentation.main.main(jobs=jobs)
         logger.info('done.')
@@ -266,10 +269,8 @@ def main(args: Optional[List[str]] = None) -> None:
     if parsed.subcommand == 'all':
         _delete_gitignore()
         generate_gitignore()
-        logger.info('at least i made it here....')
         summary = subcommand_run(paths=[], timeout=parsed.timeout, tle=parsed.tle, jobs=parsed.jobs)
         subcommand_docs(jobs=parsed.jobs)
-        logger.info('my brain hurts...')
         summary.show()
         if not summary.succeeded():
             sys.exit(1)

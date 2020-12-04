@@ -157,6 +157,8 @@ def push_documents_to_gh_pages(*, src_dir: pathlib.Path, dst_branch: str = 'gh-p
 
 def subcommand_docs(*, jobs: int = 1) -> None:
     if 'GITHUB_ACTION' in os.environ and 'GITHUB_TOKEN' in os.environ:
+        logger.info('i made it here')
+        logger.info(str(os.environ['GITHUB_REF']))
         if os.environ['GITHUB_REF'] == 'refs/heads/main':
             logger.info('generate documents...')
             onlinejudge_verify.documentation.main.main(jobs=jobs)

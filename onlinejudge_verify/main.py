@@ -266,8 +266,10 @@ def main(args: Optional[List[str]] = None) -> None:
     if parsed.subcommand == 'all':
         _delete_gitignore()
         generate_gitignore()
+        logger.info('at least i made it here....')
         summary = subcommand_run(paths=[], timeout=parsed.timeout, tle=parsed.tle, jobs=parsed.jobs)
         subcommand_docs(jobs=parsed.jobs)
+        logger.info('my brain hurts...')
         summary.show()
         if not summary.succeeded():
             sys.exit(1)
